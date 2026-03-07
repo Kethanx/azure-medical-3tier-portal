@@ -63,4 +63,25 @@ infra/      future infrastructure as code
 
 ## Architecture Diagram
 
-Architecture diagram will be added as the infrastructure is implemented.
+```mermaid
+flowchart TB
+
+    User[User / Doctor]
+
+    Frontend[Frontend - Azure App Service]
+
+    Backend[Backend API - Azure App Service]
+
+    Database[(Azure SQL Database)]
+
+    KeyVault[Azure Key Vault]
+
+    Monitor[Azure Monitor / Application Insights]
+
+    User --> Frontend
+    Frontend --> Backend
+    Backend --> Database
+    Backend --> KeyVault
+    Frontend --> Monitor
+    Backend --> Monitor
+```

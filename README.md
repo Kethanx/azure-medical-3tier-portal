@@ -32,11 +32,22 @@ It demonstrates a production-style 3-tier cloud architecture:
 
 ## Repository Structure
 
-```text
-docs/       project documentation
-src/        application source code
-infra/      future infrastructure as code
+```bash
+azure-medical-3tier-portal/
+├── docs/        project documentation
+├── src/         application source code
+└── infra/       future infrastructure as code
 ```
+
+## Technologies Used
+
+- Microsoft Azure
+- Python (backend API)
+- Azure App Service
+- Azure SQL Database
+- Azure Key Vault
+- Azure Virtual Network
+- Azure Monitor / Application Insights
 
 ## Project Roadmap
 

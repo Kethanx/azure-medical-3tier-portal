@@ -18,6 +18,16 @@ It demonstrates a production-style 3-tier cloud architecture:
 
 ---
 
+## Project Status
+
+![Status](https://img.shields.io/badge/status-in%20progress-blue)
+![Backend](https://img.shields.io/badge/backend-FastAPI-green)
+![Frontend](https://img.shields.io/badge/frontend-HTML%2FCSS%2FJS-orange)
+![Database](https://img.shields.io/badge/database-SQLite-lightgrey)
+![Cloud Target](https://img.shields.io/badge/cloud-Azure-0078D4)
+
+---
+
 ## Planned Architecture
 
 - **Frontend:** Azure App Service
@@ -34,9 +44,11 @@ It demonstrates a production-style 3-tier cloud architecture:
 
 ```bash
 azure-medical-3tier-portal/
-├── docs/        project documentation
-├── src/         application source code
-└── infra/       future infrastructure as code
+├── docs/          project documentation and screenshots
+├── infra/         future infrastructure as code
+└── src/
+    ├── api/       FastAPI backend service
+    └── frontend/  HTML/CSS/JavaScript dashboard
 ```
 
 ## Technologies Used
@@ -76,26 +88,20 @@ azure-medical-3tier-portal/
 ```mermaid
 flowchart TB
 
-    User[User / Doctor]
+    U[User Browser] --> F[Frontend Dashboard<br/>HTML, CSS, JavaScript]
 
-    Frontend[Frontend - Azure App Service]
+    F -->|GET /patients<br/>POST /patients| B[FastAPI Backend<br/>Uvicorn]
 
-    Backend[Backend API - Azure App Service]
+    B --> R[API Routes]
+    R --> DB[(SQLite Database)]
 
-    Database[(Azure SQL Database)]
+    B --> D[Swagger Docs<br/>/docs]
 
-    KeyVault[Azure Key Vault]
-
-    Monitor[Azure Monitor / Application Insights]
-
-    User --> Frontend
-    Frontend --> Backend
-    Backend --> Database
-    Backend --> KeyVault
-    Frontend --> Monitor
-    Backend --> Monitor
-```
-
-```
-
+    subgraph Local Development Architecture
+        F
+        B
+        R
+        DB
+        D
+    end
 ```

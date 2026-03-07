@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Azure Medical Portal</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="container">
+      <h1>Azure Medical Portal</h1>
+      <p class="subtitle">Patient Records Dashboard</p>
+
+      <section class="card">
+        <h2>Add Patient</h2>
+        <form id="patient-form">
+          <label for="name">Name</label>
+          <input type="text" id="name" name="name" required />
+
+          <label for="age">Age</label>
+          <input type="number" id="age" name="age" required />
+
+          <label for="condition">Condition</label>
+          <input type="text" id="condition" name="condition" required />
+
+          <button type="submit">Add Patient</button>
+        </form>
+        <p id="form-message"></p>
+      </section>
+
+      <section class="card">
+        <h2>Patient List</h2>
+        <button id="load-patients">Refresh Patient List</button>
+        <ul id="patient-list"></ul>
+      </section>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>

@@ -32,12 +32,11 @@ It demonstrates a production-style 3-tier cloud architecture:
 
 ## Repository Structure
 
-````md
-````bash
+```text
 docs/       project documentation
 src/        application source code
 infra/      future infrastructure as code
-
+```
 
 ## Project Roadmap
 
@@ -84,5 +83,8 @@ flowchart TB
     Backend --> KeyVault
     Frontend --> Monitor
     Backend --> Monitor
-````
-````
+```
+
+```
+
+```

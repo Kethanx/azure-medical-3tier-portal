@@ -1,12 +1,18 @@
-from fastapi import APIRouter
-from app.models import Patient
+from fastapi import APIRouter, Depends, HTTPException
+from sqlalchemy.orm import Session
+
+from app.database import SessionLocal, PatientDB
+from app.models import Patient, PatientCreate
 
 router = APIRouter()
 
-sample_patients = [
-    Patient(id=1, name="John Doe", age=45, condition="Hypertension"),
-    Patient(id=2, name="Jane Smith", age=37, condition="Diabetes"),
-]
+
+def get_db():
+    db = SessionLocal()
+    try:
+        yield db
+    finally:
+        db.close()
 
 
 @router.get("/")
@@ -14,23 +20,27 @@ def read_root():
     return {"message": "Azure Medical Portal API is running"}
 
 
-@router.get("/patients")
-def get_patients():
-    return sample_patients
+@router.get("/patients", response_model=list[Patient])
+def get_patients(db: Session = Depends(get_db)):
+    return db.query(PatientDB).all()
 
 
-@router.get("/patients/{patient_id}")
-def get_patient(patient_id: int):
-    for patient in sample_patients:
-        if patient.id == patient_id:
-            return patient
-    return {"error": "Patient not found"}
+@router.get("/patients/{patient_id}", response_model=Patient)
+def get_patient(patient_id: int, db: Session = Depends(get_db)):
+    patient = db.query(PatientDB).filter(PatientDB.id == patient_id).first()
+    if patient is None:
+        raise HTTPException(status_code=404, detail="Patient not found")
+    return patient
 
 
-@router.post("/patients")
-def create_patient(patient: Patient):
-    sample_patients.append(patient)
-    return {
-        "message": "Patient created successfully",
-        "patient": patient
-    }
+@router.post("/patients", response_model=Patient)
+def create_patient(patient: PatientCreate, db: Session = Depends(get_db)):
+    new_patient = PatientDB(
+        name=patient.name,
+        age=patient.age,
+        condition=patient.condition
+    )
+    db.add(new_patient)
+    db.commit()
+    db.refresh(new_patient)
+    return new_patient

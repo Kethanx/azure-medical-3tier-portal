@@ -1,7 +1,16 @@
+import logging
+
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from app.routes import router
 from app.database import init_db
+
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s - %(levelname)s - %(message)s"
+)
+
+logger = logging.getLogger(__name__)
 
 app = FastAPI(
     title="Azure Medical Portal API",
@@ -18,4 +27,7 @@ app.add_middleware(
 )
 
 init_db()
+logger.info("Database initialized successfully")
+
 app.include_router(router)
+logger.info("FastAPI application started successfully")

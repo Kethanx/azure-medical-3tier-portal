@@ -1,3 +1,5 @@
+import logging
+
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 
@@ -5,6 +7,7 @@ from app.database import SessionLocal, PatientDB
 from app.models import Patient, PatientCreate
 
 router = APIRouter()
+logger = logging.getLogger(__name__)
 
 
 def get_db():
@@ -19,6 +22,9 @@ def get_db():
 def read_root():
     return {"message": "Azure Medical Portal API is running"}
 
+@router.get("/health")
+def health_check():
+    return {"status": "healthy"}
 
 @router.get("/patients", response_model=list[Patient])
 def get_patients(db: Session = Depends(get_db)):

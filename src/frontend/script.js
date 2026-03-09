@@ -1,4 +1,5 @@
-const apiBaseUrl = "http://127.0.0.1:8000";
+const apiBaseUrl =
+  "https://api-medical-portal-keegan-d5h3c7ehg4etaqgb.westus3-01.azurewebsites.net";
 
 const patientList = document.getElementById("patient-list");
 const loadPatientsButton = document.getElementById("load-patients");

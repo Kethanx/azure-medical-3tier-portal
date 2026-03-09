@@ -23,8 +23,8 @@ app.add_middleware(
     allow_origins=[
         "http://127.0.0.1:5500",
         "http://localhost:5500",
-        "https://gentle-beach-0cb50520f.6.azurestaticapps.net",
     ],
+    allow_origin_regex=r"https://.*\.azurestaticapps\.net",
     allow_credentials=False,
     allow_methods=["*"],
     allow_headers=["*"],

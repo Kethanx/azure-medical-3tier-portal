@@ -53,15 +53,14 @@ azure-medical-3tier-portal/
     └── frontend/  HTML/CSS/JavaScript dashboard
 ```
 
-## Technologies Used
+## Cloud Stack
 
-- Microsoft Azure
-- Python (backend API)
+- Azure Static Web Apps
 - Azure App Service
-- Azure SQL Database
-- Azure Key Vault
-- Azure Virtual Network
-- Azure Monitor / Application Insights
+- FastAPI
+- GitHub Actions
+- SQLite
+- HTML / CSS / JavaScript
 
 ## Project Roadmap
 
@@ -88,22 +87,10 @@ azure-medical-3tier-portal/
 ## Architecture Diagram
 
 ```mermaid
-flowchart TB
-
-    U[User Browser] --> F[Frontend Dashboard<br/>HTML, CSS, JavaScript]
-
-    F -->|GET /patients<br/>POST /patients| B[FastAPI Backend<br/>Uvicorn]
-
-    B --> R[API Routes]
-    R --> DB[(SQLite Database)]
-
-    B --> D[Swagger Docs<br/>/docs]
-
-    subgraph Local Development Architecture
-        F
-        B
-        R
-        DB
-        D
-    end
+flowchart TD
+    U[User Browser] --> F[Azure Static Web App<br/>Frontend]
+    F --> B[Azure App Service<br/>FastAPI Backend]
+    B --> D[(SQLite Database)]
+    G[GitHub] --> A[GitHub Actions CI/CD]
+    A --> F
 ```

@@ -1,5 +1,7 @@
 # Azure Secure 3-Tier Medical Portal (Simulation)
 
+[![Azure Static Web Apps CI/CD](https://github.com/Kethanx/azure-medical-3tier-portal/actions/workflows/azure-static-web-apps-gentle-beach-0cb50520f.yml/badge.svg)](https://github.com/Kethanx/azure-medical-3tier-portal/actions/workflows/azure-static-web-apps-gentle-beach-0cb50520f.yml)
+
 ## Overview
 
 This project simulates a secure healthcare-style web application deployed on Microsoft Azure.

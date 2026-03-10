@@ -30,8 +30,5 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-init_db()
-logger.info("Database initialized successfully")
-
 app.include_router(router)
 logger.info("FastAPI application started successfully")

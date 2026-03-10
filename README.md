@@ -20,6 +20,14 @@ It demonstrates a production-style 3-tier cloud architecture:
 
 ---
 
+## Live Demo
+
+- Frontend: `https://gentle-beach-0cb50520f.6.azurestaticapps.net`
+- API Docs: `https://api-medical-portal-keegan-d5h3c7ehg4etaqgb.westus3-01.azurewebsites.net/docs`
+- Health Check: `https://api-medical-portal-keegan-d5h3c7ehg4etaqgb.westus3-01.azurewebsites.net/health`
+
+---
+
 ## Project Status
 
 ![Status](https://img.shields.io/badge/status-in%20progress-blue)
@@ -58,8 +66,9 @@ azure-medical-3tier-portal/
 - Azure Static Web Apps
 - Azure App Service
 - FastAPI
+- Azure SQL Database
+- SQLAlchemy
 - GitHub Actions
-- SQLite
 - HTML / CSS / JavaScript
 
 ## Project Roadmap
@@ -90,7 +99,7 @@ azure-medical-3tier-portal/
 flowchart TD
     U[User Browser] --> F[Azure Static Web App<br/>Frontend]
     F --> B[Azure App Service<br/>FastAPI Backend]
-    B --> D[(SQLite Database)]
-    G[GitHub] --> A[GitHub Actions CI/CD]
+    B --> D[(Azure SQL Database)]
+    G[GitHub Repository] --> A[GitHub Actions CI/CD]
     A --> F
 ```

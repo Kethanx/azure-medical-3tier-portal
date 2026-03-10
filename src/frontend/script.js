@@ -1,12 +1,10 @@
+// Backend API URL
 const apiBaseUrl =
-  "https://api-medical-portal-keegan-d5h3c7ehg4etaqgb.westus3-01.azurewebsites.net";
+  "https://api-medical-portal-keegan-d5h3c7ehg4etagqb.westus3-01.azurewebsites.net";
 
-const patientList = document.getElementById("patient-list");
-const loadPatientsButton = document.getElementById("load-patients");
-const patientForm = document.getElementById("patient-form");
-const formMessage = document.getElementById("form-message");
-
+// Load patients from the backend
 async function loadPatients() {
+  const patientList = document.getElementById("patient-list");
   patientList.innerHTML = "";
 
   try {
@@ -14,57 +12,58 @@ async function loadPatients() {
     const patients = await response.json();
 
     if (patients.length === 0) {
-      const li = document.createElement("li");
-      li.textContent = "No patients found.";
-      patientList.appendChild(li);
+      patientList.innerHTML = "<li>No patients found.</li>";
       return;
     }
 
     patients.forEach((patient) => {
       const li = document.createElement("li");
-      li.textContent = `${patient.name}, Age ${patient.age} - ${patient.condition}`;
+      li.textContent = `${patient.name} (Age ${patient.age}) - ${patient.condition}`;
       patientList.appendChild(li);
     });
   } catch (error) {
-    const li = document.createElement("li");
-    li.textContent = "Failed to load patients.";
-    patientList.appendChild(li);
     console.error("Error loading patients:", error);
+    patientList.innerHTML = "<li>Failed to load patients.</li>";
   }
 }
 
-patientForm.addEventListener("submit", async (event) => {
-  event.preventDefault();
+// Add patient form handler
+document
+  .getElementById("add-patient-form")
+  .addEventListener("submit", async function (event) {
+    event.preventDefault();
 
-  const newPatient = {
-    name: document.getElementById("name").value,
-    age: parseInt(document.getElementById("age").value),
-    condition: document.getElementById("condition").value,
-  };
+    const name = document.getElementById("name").value;
+    const age = parseInt(document.getElementById("age").value);
+    const condition = document.getElementById("condition").value;
 
-  try {
-    const response = await fetch(`${apiBaseUrl}/patients`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(newPatient),
-    });
+    try {
+      const response = await fetch(`${apiBaseUrl}/patients`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name: name,
+          age: age,
+          condition: condition,
+        }),
+      });
 
-    if (!response.ok) {
-      throw new Error("Failed to create patient");
+      if (!response.ok) {
+        throw new Error("Failed to add patient");
+      }
+
+      // Clear form
+      document.getElementById("add-patient-form").reset();
+
+      // Reload patient list
+      loadPatients();
+    } catch (error) {
+      console.error("Error adding patient:", error);
+      alert("Error adding patient.");
     }
+  });
 
-    formMessage.textContent = "Patient added successfully.";
-    patientForm.reset();
-    loadPatients();
-  } catch (error) {
-    formMessage.textContent = "Error adding patient.";
-    console.error("Error creating patient:", error);
-  }
-});
-
-loadPatientsButton.addEventListener("click", loadPatients);
-
-// Load patients automatically on page load
-loadPatients();
+// Load patients when page loads
+window.onload = loadPatients;

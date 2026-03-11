@@ -1,11 +1,10 @@
 from opencensus.ext.azure.log_exporter import AzureLogHandler
 import logging
-import os   
+import os
 
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from app.routes import router
-from app.database import init_db
 
 logging.basicConfig(
     level=logging.INFO,
@@ -14,10 +13,12 @@ logging.basicConfig(
 
 logger = logging.getLogger(__name__)
 
-logger = logging.getLogger(__name__)
-logger.addHandler(
-    AzureLogHandler(connection_string=os.getenv("APPLICATIONINSIGHTS_CONNECTION_STRING"))
-)
+connection_string = os.getenv("APPLICATIONINSIGHTS_CONNECTION_STRING")
+if connection_string:
+    logger.addHandler(
+        AzureLogHandler(connection_string=connection_string)
+    )
+
 logger.warning("Application started")
 
 app = FastAPI(

@@ -97,9 +97,26 @@ azure-medical-3tier-portal/
 
 ```mermaid
 flowchart TD
-    U[User Browser] --> F[Azure Static Web App<br/>Frontend]
-    F --> B[Azure App Service<br/>FastAPI Backend]
-    B --> D[(Azure SQL Database)]
-    G[GitHub Repository] --> A[GitHub Actions CI/CD]
-    A --> F
+    U[User Browser]
+
+    subgraph Azure["Microsoft Azure"]
+        F[Azure Static Web App<br/>Frontend]
+        B[Azure App Service<br/>FastAPI Backend]
+        K[Azure Key Vault<br/>Secrets]
+        D[(Azure SQL Database)]
+        M[Azure Application Insights<br/>Logs & Monitoring]
+    end
+
+    subgraph GitHub["GitHub"]
+        R[Repository]
+        C[GitHub Actions<br/>Frontend Deployment]
+    end
+
+    U --> F
+    F --> B
+    B --> K
+    K --> D
+    B --> M
+    R --> C
+    C --> F
 ```

@@ -49,6 +49,7 @@ def get_patient(patient_id: int, db: Session = Depends(get_db)):
 @router.post("/patients", response_model=Patient)
 def create_patient(patient: PatientCreate, db: Session = Depends(get_db)):
     logger.info(f"POST /patients called for {patient.name}")
+    logger.info(f"Creating patient: {patient.name}")
     new_patient = PatientDB(
         name=patient.name,
         age=patient.age,

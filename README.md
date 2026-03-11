@@ -53,12 +53,24 @@ It demonstrates a production-style 3-tier cloud architecture:
 ## Repository Structure
 
 ```bash
-azure-medical-3tier-portal/
-├── docs/          project documentation and screenshots
-├── infra/         future infrastructure as code
-└── src/
-    ├── api/       FastAPI backend service
-    └── frontend/  HTML/CSS/JavaScript dashboard
+azure-medical-3tier-portal
+│
+├── docs/                # documentation, diagrams
+│
+├── infra/               # Infrastructure-as-Code
+│   ├── main.bicep
+│   └── main.parameters.json
+│
+├── src/
+│   ├── api/             # FastAPI backend
+│   └── frontend/        # Static web frontend
+│
+├── .github/
+│   └── workflows/       # CI/CD pipelines
+│
+├── README.md
+├── LICENSE
+└── .gitignore
 ```
 
 ## Cloud Stack
@@ -99,17 +111,17 @@ azure-medical-3tier-portal/
 flowchart TD
     U[User Browser]
 
-    subgraph Azure["Microsoft Azure"]
-        F[Azure Static Web App<br/>Frontend]
-        B[Azure App Service<br/>FastAPI Backend]
-        K[Azure Key Vault<br/>Secrets]
+    subgraph Azure
+        F[Azure Static Web App]
+        B[Azure App Service - FastAPI]
+        K[Azure Key Vault]
         D[(Azure SQL Database)]
-        M[Azure Application Insights<br/>Logs & Monitoring]
+        M[Application Insights]
     end
 
-    subgraph GitHub["GitHub"]
+    subgraph GitHub
         R[Repository]
-        C[GitHub Actions<br/>Frontend Deployment]
+        C[GitHub Actions CI/CD]
     end
 
     U --> F

@@ -1,20 +1,27 @@
 # Architecture Diagram
 
 ```mermaid
-flowchart TB
+flowchart TD
+    U[User Browser]
 
-    U[User] --> F[Frontend - Azure App Service]
-
-    F --> B[Backend API - Azure App Service]
-
-    B --> K[Azure Key Vault]
-
-    B --> D[(Azure SQL Database)]
-
-    subgraph Azure Resource Group
-        F
-        B
-        K
-        D
+    subgraph Azure
+        F[Azure Static Web App]
+        B[Azure App Service - FastAPI]
+        K[Azure Key Vault]
+        D[(Azure SQL Database)]
+        M[Application Insights]
     end
+
+    subgraph GitHub
+        R[Repository]
+        C[GitHub Actions CI/CD]
+    end
+
+    U --> F
+    F --> B
+    B --> K
+    K --> D
+    B --> M
+    R --> C
+    C --> F
 ```

@@ -3,3 +3,4 @@ uvicorn[standard]
 sqlalchemy
 gunicorn
 pyodbc
+opencensus-ext-azure

@@ -1,4 +1,6 @@
+from opencensus.ext.azure.log_exporter import AzureLogHandler
 import logging
+import os   
 
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
@@ -11,6 +13,12 @@ logging.basicConfig(
 )
 
 logger = logging.getLogger(__name__)
+
+logger = logging.getLogger(__name__)
+logger.addHandler(
+    AzureLogHandler(connection_string=os.getenv("APPLICATIONINSIGHTS_CONNECTION_STRING"))
+)
+logger.warning("Application started")
 
 app = FastAPI(
     title="Azure Medical Portal API",

@@ -132,18 +132,16 @@ Key concepts demonstrated:
 
 ---
 
-# Infrastructure as Code
+## Infrastructure CI/CD
 
-Azure infrastructure can be deployed using **Bicep templates** located in the `infra/` directory.
+Infrastructure is deployed using GitHub Actions and Azure Bicep.
 
-Example deployment:
+The deployment pipeline uses:
 
-```bash
-az deployment group create \
-  --resource-group rg-medical-portal-dev \
-  --template-file infra/main.bicep \
-  --parameters infra/main.parameters.json
-```
+- GitHub Actions
+- Azure OIDC authentication
+- Azure Resource Manager (ARM) deployments
+- Bicep Infrastructure-as-Code templates
 
 > Update secure parameters before deployment.
 

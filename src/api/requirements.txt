@@ -4,3 +4,4 @@ sqlalchemy
 gunicorn
 pyodbc
 opencensus-ext-azure
+azure-monitor-opentelemetry

@@ -10,7 +10,7 @@ param appServicePlanName string = 'asp-medical-portal-keegan-bicep'
 param appInsightsName string = 'appi-medical-portal-keegan-bicep'
 
 @description('Key Vault name')
-param keyVaultName string = 'kvmedportalbicep'
+param keyVaultName string = 'kvmedportalbicep2'
 
 @description('SQL Server name')
 param sqlServerName string = 'medical-portal-sql-keegan-bicep'

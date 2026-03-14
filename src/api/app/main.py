@@ -1,15 +1,15 @@
 import logging
 import os
 
-from fastapi import FastAPI
-from fastapi.middleware.cors import CORSMiddleware
 from azure.monitor.opentelemetry import configure_azure_monitor
 
-from app.routes import router
-
-# Enable Azure Application Insights / OpenTelemetry only if connection string exists
 if os.getenv("APPLICATIONINSIGHTS_CONNECTION_STRING"):
     configure_azure_monitor()
+
+from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
+
+from app.routes import router
 
 logging.basicConfig(
     level=logging.INFO,

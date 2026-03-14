@@ -17,11 +17,11 @@ This project simulates a secure healthcare-style cloud application deployed on M
 
 It demonstrates a production-style 3-tier cloud architecture:
 
-- Frontend hosted on Azure App Service
-- Backend API hosted on Azure App Service
+- Frontend hosted on **Azure Static Web Apps**
+- Backend API hosted on **Azure App Service**
 - Azure SQL Database for data storage
 - Azure Key Vault for secrets management
-- Virtual Network design with private connectivity
+- Virtual network and private endpoint architecture designed for secure database access
 - Monitoring with Azure Monitor and Application Insights
 - Cost awareness through Azure budgeting and tagging
 
@@ -58,8 +58,8 @@ flowchart TD
 
     U --> F
     F --> B
+    B --> D
     B --> K
-    K --> D
     B --> M
     R --> C
     C --> F
@@ -132,7 +132,7 @@ Key concepts demonstrated:
 
 ---
 
-## Infrastructure CI/CD
+# Infrastructure CI/CD
 
 Infrastructure is deployed using GitHub Actions and Azure Bicep.
 
@@ -143,8 +143,6 @@ The deployment pipeline uses:
 - Azure Resource Manager (ARM) deployments
 - Bicep Infrastructure-as-Code templates
 
-> Update secure parameters before deployment.
-
 The Bicep templates provision:
 
 - Azure App Service
@@ -153,6 +151,15 @@ The Bicep templates provision:
 - Azure SQL Database
 - Azure Key Vault
 - Azure Application Insights
+
+Infrastructure can also be deployed using Azure CLI
+
+```bash
+az deployment group create \
+  --resource-group rg-medical-portal-dev \
+  --template-file infra/main.bicep \
+  --parameters infra/main.parameters.json
+```
 
 ---
 
@@ -165,6 +172,25 @@ Security practices demonstrated in this project:
 - Sensitive values excluded from source control
 - Secure environment variables configured in Azure
 
+The backend App Service authenticates to Azure Key Vault using **Managed Identity**, eliminating the need to store credentials in the application code.
+
+---
+
+# Network Security
+
+A private networking architecture was designed for the backend API and Azure SQL Database using:
+
+- Azure Virtual Network
+- App Service integration subnet
+- SQL Private Endpoint subnet
+- Azure SQL Private Endpoint
+- private DNS integration
+
+The backend currently runs on the **Azure App Service Free F1 tier**, which does **not support VNet Integration**.  
+Because of this pricing-tier limitation, the live deployment does not yet use full private connectivity from App Service to Azure SQL.
+
+Upgrading the backend App Service plan to **Basic (B1)** or higher would enable the complete private networking path.
+
 ---
 
 # Monitoring
@@ -174,9 +200,10 @@ Application telemetry is collected using **Azure Application Insights**.
 Tracked data includes:
 
 - API request telemetry
-- startup logs
+- application startup logs
+- dependency tracking
 - application exceptions
-- centralized log queries using Azure Monitor
+- centralized querying using Azure Monitor Log Analytics (KQL)
 
 ---
 
@@ -241,6 +268,5 @@ Potential enhancements:
 - Authentication with Azure AD
 - Role-based access control
 - Expanded API telemetry
-- Infrastructure deployment pipelines
 
 ---
